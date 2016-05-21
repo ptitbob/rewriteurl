@@ -1,0 +1,49 @@
+front_http_1_A:
+  container_name: front1A
+  image: nginx
+  ports:
+    - 81:80
+  volumes:
+    - ./front/1/A:/usr/share/nginx/html:ro
+    - ./front/config/nginx.conf:/etc/nginx/nginx.conf:ro
+
+front_http_1_B:
+  container_name: front1B
+  image: nginx
+  ports:
+    - 82:80
+  volumes:
+    - ./front/1/B:/usr/share/nginx/html:ro
+    - ./front/config/nginx.conf:/etc/nginx/nginx.conf:ro
+
+front_http_2_A:
+  container_name: front2A
+  image: nginx
+  ports:
+    - 83:80
+  volumes:
+    - ./front/2/A:/usr/share/nginx/html:ro
+    - ./front/config/nginx.conf:/etc/nginx/nginx.conf:ro
+
+front_http_2_B:
+  container_name: front2B
+  image: nginx
+  ports:
+    - 84:80
+  volumes:
+    - ./front/2/B:/usr/share/nginx/html:ro
+    - ./front/config/nginx.conf:/etc/nginx/nginx.conf:ro
+
+haproxy:
+  container_name: haproxy
+  image: stevecrozz/haproxy-lua
+  volumes:
+    - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+  ports:
+    - 80:80
+    - 9000:9000
+  links:
+    - front_http_1_A
+    - front_http_1_B
+    - front_http_2_A
+    - front_http_2_B
