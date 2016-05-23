@@ -36,7 +36,7 @@ front_http_2_B:
 
 haproxy:
   container_name: haproxy
-  image: stevecrozz/haproxy-lua
+  image: haproxy:latest
   volumes:
     - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
   ports:
