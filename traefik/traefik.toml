@@ -1,0 +1,45 @@
+logLevel = "WARNING"
+defaultEntryPoints = ["http"]
+
+[entryPoints]
+  [entryPoints.http]
+    address = ":80"
+
+[backends]
+  [backends.web1]
+    [backends.web1.LoadBalancer]
+      method = "wrr"
+    [backends.web1.servers.server1]
+      url = "http://front_http_1_A:80"
+      weight = 2
+    [backends.web1.servers.server2]
+      url = "http://front_http_1_B:80"
+      weight = 1
+  [backends.web2]
+    [backends.web2.LoadBalancer]
+      method = "wrr"
+    [backends.web2.servers.server1]
+      url = "http://front_http_2_A:80"
+      weight = 2
+    [backends.web2.servers.server2]
+      url = "http://front_http_2_B:80"
+      weight = 1
+
+
+[frontends]
+  [frontEnds.web1]
+    backend = "web1"
+    entrypoints = ["http"]
+    [frontEnds.web1.routes.web1]
+      rule = "PathPrefixStrip:/web1"
+  [frontEnds.web2]
+    backend = "web2"
+    entrypoints = ["http"]
+    [frontEnds.web2.routes.web1]
+      rule = "PathPrefixStrip:/web2"
+
+[file]
+  watch = true
+
+[web]
+  address = ":9000"

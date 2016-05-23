@@ -1,0 +1,49 @@
+front_http_1_A:
+  container_name: front1A
+  image: nginx:latest
+  ports:
+    - 81:80
+  volumes:
+    - ./front/1/A:/usr/share/nginx/html:ro
+    - ./front/config/nginx.conf:/etc/nginx/nginx.conf:ro
+
+front_http_1_B:
+  container_name: front1B
+  image: nginx:latest
+  ports:
+    - 82:80
+  volumes:
+    - ./front/1/B:/usr/share/nginx/html:ro
+    - ./front/config/nginx.conf:/etc/nginx/nginx.conf:ro
+
+front_http_2_A:
+  container_name: front2A
+  image: nginx:latest
+  ports:
+    - 83:80
+  volumes:
+    - ./front/2/A:/usr/share/nginx/html:ro
+    - ./front/config/nginx.conf:/etc/nginx/nginx.conf:ro
+
+front_http_2_B:
+  container_name: front2B
+  image: nginx:latest
+  ports:
+    - 84:80
+  volumes:
+    - ./front/2/B:/usr/share/nginx/html:ro
+    - ./front/config/nginx.conf:/etc/nginx/nginx.conf:ro
+
+traefik:
+  container_name: traefik
+  image: traefik:latest
+  volumes:
+    - ./traefik/traefik.toml:/etc/traefik/traefik.toml
+  ports:
+    - 80:80
+    - 9000:9000
+  links:
+    - front_http_1_A
+    - front_http_1_B
+    - front_http_2_A
+    - front_http_2_B
