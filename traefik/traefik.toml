@@ -26,7 +26,7 @@ defaultEntryPoints = ["http"]
       weight = 1
 
 
-[frontends]
+[frontEnds]
   [frontEnds.web1]
     backend = "web1"
     entrypoints = ["http"]
