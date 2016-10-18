@@ -35,7 +35,7 @@ defaultEntryPoints = ["http"]
   [frontEnds.web2]
     backend = "web2"
     entrypoints = ["http"]
-    [frontEnds.web2.routes.web1]
+    [frontEnds.web2.routes.web2]
       rule = "PathPrefixStrip:/web2"
 
 [file]
